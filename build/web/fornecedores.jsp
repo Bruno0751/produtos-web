@@ -3,6 +3,7 @@
     Created on : 21/09/2024, 13:41:12
     Author     : Bruno Gressler da Silveira
 --%>
+<%@page import="java.util.Properties"%>
 <%@page import="srv.Servico"%>
 <%@page import="util.Util"%>
 <%@page import="dao.PessoaDao"%>
@@ -24,22 +25,22 @@
         <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="styles/estilos.css">
 
+        <script src="js/prpriedadesURL.js"></script>
         <script src="js/jquery-3.7.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
         <script>
-            const protocol = window.location.protocol;
-            const hostname = window.location.hostname;
-            const port = window.location.port;
-            const type = "fornedor";
+            const type = "fornecedor";
         </script>
     </head>
     <body>
+        <header>
+            <script src="component/header.js"></script>
+        </header>
         <section class="section">
             <div class="container">
-                <h1 class="title is-1">Lista Fornecedores</h1>
+                <h1 class="title is-1"><a href="index.html" class="anton-regular">Lista Fornecedores</a>    </h1>
 
                 <nav>
-                    <script src="js/componentes/menu.js"></script>
                 </nav>
 
                 <div class="buttons">
@@ -86,13 +87,13 @@
                 </div>
 
                 <div style="display: none;" id="form-prod">
-                    <input class="input" type="text" placeholder="Fornecedor" id="nomeFornecedor">
+                    <span class="required">*</span><input class="input" type="text" placeholder="Fornecedor" id="nomeUser">
                                         
-                    <input class="input" type="text" placeholder="CNPJ" id="cnpjFornecedor" maxlength="14">
+                    <span class="required">*</span><input class="input" type="text" placeholder="CNPJ" id="documentoUser" maxlength="14">
                     
-<!--                    <input class="input" type="text" placeholder="Telrfone" id="telefoneFornecedor" maxlength="15">
+                    <span class="required">*</span><input class="input" type="tel" placeholder="Telefone" id="telefoneUser">
                     
-                    <input class="input" type="text" placeholder="Endereco" id="enderecoFornecedor">-->
+                    <input class="input" type="email" placeholder="Email" id="emailUser">
                     
                     <div class="control">
                         <button class="button is-primary" onclick="salvar()">Salvar</button>
@@ -111,8 +112,10 @@
             function salvar() {
                 let data = new Object();
                 data = {
-                    nomeFornecedor: $("#nomeFornecedor").val(),
-                    cnpjFornecedor: $("#cnpjFornecedor").val()
+                    nomeUser: $("#nomeUser").val(),
+                    documentoUser: $("#documentoUser").val(),
+                    telefoneUser: $("#telefoneUser").val(),
+                    emailUser: $("#emailUser").val()
                 };
                 const queryString = new URLSearchParams(data).toString();
                 window.location.href = protocol + "//" + hostname + ":" + port + "/produtos-web/ServPricipal?opcao=cadastrar&" + queryString + "&type=" + type;

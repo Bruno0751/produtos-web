@@ -42,8 +42,8 @@ public class ProdutoDao {
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            JOptionPane.showMessageDialog(null, "Erro ao buscar Clientes", "ERRO", JOptionPane.ERROR_MESSAGE);
-            throw new SQLException("Erro ao buscar Clientes");
+            JOptionPane.showMessageDialog(null, "Erro ao buscar produtos", "ERRO", JOptionPane.ERROR_MESSAGE);
+            throw new SQLException("Erro ao buscar produtos");
         } finally {
             if (conexaoMysql != null){
                 conexaoMysql.close();
@@ -91,8 +91,8 @@ public class ProdutoDao {
             JOptionPane.showMessageDialog(null, "Cliente deletado", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            JOptionPane.showMessageDialog(null, "Erro ao deletar Cliente", "ERRO", JOptionPane.ERROR_MESSAGE);
-            throw new SQLException("Erro ao deletar Cliente");
+            JOptionPane.showMessageDialog(null, "Erro ao deletar produto", "ERRO", JOptionPane.ERROR_MESSAGE);
+            throw new SQLException("Erro ao deletar produto");
         }
     }
 
@@ -106,8 +106,8 @@ public class ProdutoDao {
             pst.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            JOptionPane.showMessageDialog(null, "Erro ao inserir Cliente", "ERRO", JOptionPane.ERROR_MESSAGE);
-            throw new SQLException("Erro ao inserir Cliente");
+            JOptionPane.showMessageDialog(null, "Erro ao inserir produto", "ERRO", JOptionPane.ERROR_MESSAGE);
+            throw new SQLException("Erro ao inserir produto");
         }
     }
 

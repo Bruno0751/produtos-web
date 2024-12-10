@@ -42,10 +42,16 @@ public class ServPricipal extends HttpServlet {
                         break;
                     case "cadastrar":
                         this.cadastar(request, conexaoMysql, response);
+                        break;
                     case "comprar_produto":
                         this.comprarProduto(request, conexaoMysql, response);
+                        break;
                     case "repor_produto":
                         this.reporEstoque(request, conexaoMysql, response);
+                        break;
+                    case "login":
+                        this.login(request, conexaoMysql, response);
+                    break;
                     case "enviarSMS":
 //                        this.enviarSMS(response);
                     default:
@@ -55,7 +61,7 @@ public class ServPricipal extends HttpServlet {
                 conexaoMysql.close();
 
             } catch (Exception e) {
-                conexaoMysql.rollback();
+//                conexaoMysql.rollback();
                 System.out.println(e.getMessage());
                 throw e;
             }
@@ -125,7 +131,7 @@ public class ServPricipal extends HttpServlet {
             throw new NullPointerException("Err");
         }
         switch (request.getParameter("type")) {
-            case "fornedor":
+            case "fornecedor":
                 PessoaDao.delete(conexaoMysql, Integer.parseInt(request.getParameter("id")));
                 response.sendRedirect("fornecedores.jsp");
                 break;
@@ -143,16 +149,64 @@ public class ServPricipal extends HttpServlet {
 
     private void cadastar(HttpServletRequest request, Connection conexaoMysql, HttpServletResponse response) throws IOException, SQLException {
         switch (request.getParameter("type")) {
-            case "fornedor":
-                if (request.getParameter("nomeFornecedor").equals("")) {
+            case "registerUser":
+                if (request.getParameter("emailUser").equals("")) {
                     throw new NullPointerException("Err");
                 }
-                if (request.getParameter("cnpjFornecedor").equals("")) {
+                if (request.getParameter("telefoneUser").equals("")) {
+                    throw new NullPointerException("Err");
+                }
+                if (request.getParameter("nomeUser").equals("")) {
+                    throw new NullPointerException("Err");
+                }
+                if (request.getParameter("nomeUser").equals("")) {
+                    throw new NullPointerException("Err");
+                }
+                if (request.getParameter("loginUser").equals("")) {
+                    throw new NullPointerException("Err");
+                }
+                if (request.getParameter("documentoUser").equals("")) {
                     throw new NullPointerException("Err");
                 }
                 Pessoa pessoa = new Pessoa();
-                pessoa.setNome(request.getParameter("nomeFornecedor"));
-                pessoa.setDocumento(request.getParameter("cnpjFornecedor"));
+//                System.out.println(request.getParameter("emailUser"));
+//                System.out.println(request.getParameter("telefoneUser"));
+//                System.out.println(request.getParameter("nomeUser"));
+//                System.out.println(request.getParameter("senhaUser"));
+                
+                pessoa.setNome(request.getParameter("nomeUser"));
+                pessoa.setEmail(request.getParameter("emailUser"));
+                pessoa.setSenha(request.getParameter("senhaUser"));
+                pessoa.setLogin(request.getParameter("loginUser"));
+                pessoa.setTelefone(Integer.parseInt(request.getParameter("telefoneUser")));
+                pessoa.setDocumento(request.getParameter("documentoUser"));
+                
+                PessoaDao.insert(pessoa, conexaoMysql);
+                response.sendRedirect("fornecedores.jsp");
+                break;
+            case "fornecedor":
+                if (request.getParameter("nomeUser").equals("")) {
+                    throw new NullPointerException("Err");
+                }
+                if (request.getParameter("documentoUser").equals("")) {
+                    throw new NullPointerException("Err");
+                }
+                if (request.getParameter("telefoneUser").equals("")) {
+                    throw new NullPointerException("Err");
+                }
+                pessoa = new Pessoa();
+                if (request.getParameter("emailUser").equals("")) {
+                   pessoa.setEmail(null);
+                } else {
+                    pessoa.setEmail(request.getParameter("emailUser"));
+                }
+                pessoa.setNome(request.getParameter("nomeUser"));
+                pessoa.setDocumento(request.getParameter("documentoUser"));
+                pessoa.setTelefone(Integer.parseInt(request.getParameter("telefoneUser")));
+                
+                pessoa.setTipo(Pessoa.Tipo.FORNECEDOR.toString());
+                System.out.println(pessoa.toString());
+                
                 PessoaDao.insert(pessoa, conexaoMysql);
                 response.sendRedirect("fornecedores.jsp");
                 break;
@@ -174,6 +228,7 @@ public class ServPricipal extends HttpServlet {
                 produto.setCategoria(request.getParameter("enCategoria"));
                 produto.setQuantidade(Integer.parseInt(request.getParameter("numQnt")));
                 produto.setPreco(Double.parseDouble(request.getParameter("txtValor")));
+                
                 ProdutoDao.insert(produto, conexaoMysql);
                 response.sendRedirect("produtos.jsp");
                 break;
@@ -208,6 +263,17 @@ public class ServPricipal extends HttpServlet {
             throw new NullPointerException("Err");
         }
         ProdutoDao.reporEstoque(conexaoMysql, Integer.parseInt(request.getParameter("id")), Integer.parseInt(request.getParameter("quantidadeRepor")));
+        response.sendRedirect("produtos.jsp");
+    }
+
+    private void login(HttpServletRequest request, Connection conexaoMysql, HttpServletResponse response) throws IOException {
+        if (request.getParameter("nomeUser").equals("")) {
+            throw new NullPointerException("Err");
+        }
+        if (request.getParameter("senhaUser").equals("")) {
+            throw new NullPointerException("Err");
+        }
+        
         response.sendRedirect("produtos.jsp");
     }
 }

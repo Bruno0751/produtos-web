@@ -34,12 +34,14 @@
         </script>
     </head>
     <body>
+        <header>
+            <script src="component/header.js"></script>
+        </header>
         <section class="section">
+            <h2 class="title is-2 disabled">menu</h2>
             <div class="container">
-                <h1 class="title is-1">Buscar Dados</h1>
-
+                
                 <nav>
-                    <script src="js/componentes/menu.js"></script>
                 </nav>
 
                 <div class="buttons">
@@ -93,14 +95,17 @@
 
                 <div style="display: none;" id="form-prod">
                     <input class="input" type="text" placeholder="Produto" id="txtProduto">
+                    
                     <div class="select is-normal" >
-                        <select id="enCategoria">
+                        <select id="categoria">
                             <option value="">Categoria</option>
                             <option value="fruta">Fruta</option>
                             <option value="outros">Outros</option>
                         </select>
                     </div>
+                    
                     <input class="input" type="number" placeholder="Quantidade" id="numQnt">
+                    
                     <input class="input" type="text" placeholder="Valor" id="txtValor" maxlength="13">
                     <div class="control">
                         <button class="button is-primary" onclick="salvar()">Salvar</button>
@@ -113,15 +118,15 @@
             </footer>
         </section>
         <script>
-            var enCategoria;
+            var categoria;
             var tituloDeConfirm = "<span style='background-color: #c0c0c047; color: #ff0000; padding: 5px; font-weight: bolder;'>VOCÊ TEM CERTEZA</span>";
             var menssagemmDeConfirm = "<div style='background-color: #c0c0c047;'>Precione <strong style='font-size: 20px;'>Y</strong> para confirmar.<br>\n\
             Precione <strong style='font-size: 20px;'>N</strong> para confirmar.</div>";
 
             $(document).ready(function () {
                 $('#txtValor').mask('##########.##');
-                $('#enCategoria').on('change', function () {
-                    enCategoria = $(this).val();
+                $('#categoria').on('change', function () {
+                    categoria = $(this).val();
                 });
             });
             function salvar() {
@@ -129,7 +134,7 @@
 
                 data = {
                     produto: $("#txtProduto").val(),
-                    enCategoria: enCategoria,
+                    enCategoria: categoria,
                     numQnt: $("#numQnt").val(),
                     txtValor: $("#txtValor").val()
                 };

@@ -1,0 +1,1 @@
+document.body.innerHTML += "<h1 class='title is-1'><a href='index.html'>Home</a></h1>";

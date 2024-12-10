@@ -106,12 +106,17 @@ public class PessoaDao {
     }
 
     public static void insert(Pessoa pessoa, Connection conexaoMysql) throws SQLException {
-        try (PreparedStatement pst = conexaoMysql.prepareStatement("INSERT INTO db_produtos.pessoa \n"
-                + "(id_pessoa, nome, documento, tipo, data_registro) \n"
-                + "VALUES (NULL, ?, ?, ?, NOW());")) {
+        try (PreparedStatement pst = conexaoMysql.prepareStatement("INSERT INTO db_produtos.pessoa "
+                + "(id_pessoa, nome, documento, telefone ,email, senha, login, tipo, data_registro)\n"
+                + "VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, NOW());")) {
             pst.setString(1, pessoa.getNome());
             pst.setString(2, pessoa.getDocumento());
-            pst.setString(3, "FORNECEDOR");
+            pst.setInt(3, pessoa.getTelefone());
+            pst.setString(4, pessoa.getEmail());
+            pst.setString(5, pessoa.getSenha());
+            pst.setString(6, pessoa.getLogin());
+            pst.setString(7, pessoa.getTipo());
+            System.out.println(pst.toString());
             pst.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
